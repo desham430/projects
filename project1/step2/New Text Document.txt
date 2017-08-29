@@ -1,0 +1,4 @@
+batting = LOAD '/user/st5/Batting.csv' USING PigStorage(',');
+raw_runs = FILTER batting BY $1==1875;
+runs = FOREACH raw_runs GENERATE *;
+DUMP runs;

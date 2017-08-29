@@ -1,0 +1,21 @@
+1963-aaronha01-121
+SELECT max(runs) from SELECT year,player_id,runs FROM batting 
+where year BETWEEN 1970 AND 1979);
+SELECT year, max(runs) FROM batting GROUP BY year;
+select year,runs from batting where year=(1970,1972);
+LOAD DATA INPATH '/user/st5/ManagersHalf.csv' OVERWRITE INTO TABLE temp_ManagersHalf;
+create table ManagersHalf (manager_ID STRING,year_ID INT,team_ID STRING,igid STRING,inseason INT,half INT,G INT,W INT,L INT,rank INT);
+insert overwrite table ManagersHalf  
+SELECT  
+  regexp_extract(col_value, '^(?:([^,]*),?){1}', 1) manager_ID,  
+  regexp_extract(col_value, '^(?:([^,]*),?){2}', 1) year_ID,  
+  regexp_extract(col_value, '^(?:([^,]*),?){3}', 1) team_ID,
+  regexp_extract(col_value, '^(?:([^,]*),?){4}', 1) igid,
+  regexp_extract(col_value, '^(?:([^,]*),?){5}', 1) inseason,
+  regexp_extract(col_value, '^(?:([^,]*),?){6}', 1) half,
+  regexp_extract(col_value, '^(?:([^,]*),?){7}', 1) G,
+  regexp_extract(col_value, '^(?:([^,]*),?){8}', 1) W,
+  regexp_extract(col_value, '^(?:([^,]*),?){9}', 1) L,
+  regexp_extract(col_value, '^(?:([^,]*),?){10}', 1) rank, 
+from temp_ManagersHalf;
+SELECT manager_ID,max(rank) from ManagersHalf GROUP BY manager_ID; 
